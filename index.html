@@ -30,14 +30,11 @@
           const context = canvas.getContext('2d');
           canvas.height = scaledViewport.height;
           canvas.width = scaledViewport.width;
-          const canvasDataUrl = canvas.toDataURL('image/jpeg', 1.0); // Convert canvas to data URL
-          const img = document.createElement('img');
-          img.src = canvasDataUrl;
-          img.style.width = '100%'; // Ensure the image fills the container width
-          pdfContainer.appendChild(img);
-          page.render({
-            canvasContext: context,
-            viewport: scaledViewport
+          const img = new Image();
+          page.render({ canvasContext: context, viewport: scaledViewport }).promise.then(() => {
+            img.src = canvas.toDataURL();
+            img.style.width = '100%'; // Ensure the image fills the container width
+            pdfContainer.appendChild(img);
           });
         });
       }
