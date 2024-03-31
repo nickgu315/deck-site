@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Viewer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+  <style>
+    #pdf-viewer {
+      position: absolute;
+    
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="pdf-viewer"></div>
+  <script>
+    // Initialize PDF.js
+    pdfjsLib.getDocument('https://cdn.shopify.com/s/files/1/0804/7489/8733/files/Folia_Investor_Deck_3-8-2024.pdf?v=1711866686').promise.then(pdf => {
+      for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+        pdf.getPage(pageNumber).then(page => {
+          const scale = 1.5;
+          const viewport = page.getViewport({ scale });
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+          document.getElementById('pdf-viewer').appendChild(canvas);
+          page.render({
+            canvasContext: context,
+            viewport: viewport
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
