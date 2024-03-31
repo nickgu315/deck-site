@@ -9,20 +9,22 @@
 
 
 
-    #pdf-viewer {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%; /* Set the width to fill the screen */
-    
+    @media not screen and (max-width: 768px) {
+        #pdf-viewer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%; /* Set the width to fill the screen */
+        }
     }
+
 
     @media screen and (max-width: 768px) {
     #pdf-viewer {
         width: 150%; /* Set the width to fill the screen */
         transform: rotate(-90deg);
     }
-}
+    }
 
   </style>
 </head>
