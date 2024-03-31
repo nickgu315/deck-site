@@ -18,12 +18,12 @@
   <script>
     // Initialize PDF.js
     pdfjsLib.getDocument('https://cdn.shopify.com/s/files/1/0804/7489/8733/files/Folia_Investor_Deck_3-8-2024.pdf?v=1711866686').promise.then(pdf => {
-      // Determine the scale based on viewport width
       const viewportWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-      const scale = viewportWidth < 600 ? viewportWidth / 600 : 1; // Adjust the divisor (600) as needed
-
+      
       for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
         pdf.getPage(pageNumber).then(page => {
+          // Determine the scale based on the viewport width and page width
+          const scale = viewportWidth / page.getViewport({ scale: 1 }).width;
           const viewport = page.getViewport({ scale });
           const canvas = document.createElement('canvas');
           const context = canvas.getContext('2d');
