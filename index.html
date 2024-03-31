@@ -3,22 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Folia Deck</title>
+  <title>PDF Viewer</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
   <style>
-    @media only screen and (max-width: 768px) and (orientation: landscape) {
-      html, body {
-        width: 100vw;
-        height: 100vh;
+    /* Landscape orientation styles */
+    @media screen and (orientation: portrait) and (max-width: 768px) {
+      body {
+        width: 100vh;
+        height: 100vw;
         overflow: hidden;
+      }
+      #pdf-viewer {
+        transform: rotate(90deg) translateX(50%);
+        transform-origin: top left;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100vh; /* Set the width to fill the screen in portrait */
+        height: 100vw; /* Set the height to fill the screen in portrait */
       }
     }
 
+    /* Default styles for other orientations or larger screens */
     #pdf-viewer {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
       width: 100%; /* Set the width to fill the screen */
+      height: 100%; /* Set the height to fill the screen */
     }
   </style>
 </head>
