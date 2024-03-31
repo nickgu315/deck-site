@@ -9,7 +9,8 @@
     #pdf-viewer {
       position: absolute;
       left: 50%;
-      transform: translate(-50%);
+      transform: translateX(-50%);
+      width: 100%; /* Set the width to fill the screen */
     }
   </style>
 </head>
@@ -18,21 +19,21 @@
   <script>
     // Initialize PDF.js
     pdfjsLib.getDocument('https://cdn.shopify.com/s/files/1/0804/7489/8733/files/Folia_Investor_Deck_3-8-2024.pdf?v=1711866686').promise.then(pdf => {
-      const viewportWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      const pdfContainer = document.getElementById('pdf-viewer');
       
       for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
         pdf.getPage(pageNumber).then(page => {
-          // Determine the scale based on the viewport width and page width
-          const scale = viewportWidth / page.getViewport({ scale: 1 }).width * 2;
-          const viewport = page.getViewport({ scale });
+          const viewport = page.getViewport({ scale: 1 });
           const canvas = document.createElement('canvas');
           const context = canvas.getContext('2d');
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-          document.getElementById('pdf-viewer').appendChild(canvas);
+          const scale = pdfContainer.clientWidth / viewport.width;
+          const scaledViewport = page.getViewport({ scale });
+          canvas.height = scaledViewport.height;
+          canvas.width = scaledViewport.width;
+          pdfContainer.appendChild(canvas);
           page.render({
             canvasContext: context,
-            viewport: viewport
+            viewport: scaledViewport
           });
         });
       }
