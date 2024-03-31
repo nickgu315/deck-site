@@ -3,38 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PDF Viewer</title>
+  <title>Folia Deck</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
   <style>
+    @media only screen and (max-width: 768px) and (orientation: landscape) {
+      html, body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+    }
+
     #pdf-viewer {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
       width: 100%; /* Set the width to fill the screen */
     }
-
-    /* Landscape orientation styles */
-    @media screen and (orientation: landscape) {
-      #pdf-viewer {
-        display: none; /* Hide PDF viewer in landscape orientation */
-      }
-    }
   </style>
 </head>
 <body>
   <div id="pdf-viewer"></div>
   <script>
-    // Function to force portrait mode on mobile devices
-    function forcePortraitMode() {
-      if (window.innerHeight > window.innerWidth) {
-        // Portrait orientation, show PDF viewer
-        document.getElementById('pdf-viewer').style.display = 'none';
-      } else {
-        // Landscape orientation, hide PDF viewer
-        document.getElementById('pdf-viewer').style.display = 'block';
-      }
-    }
-
     // Initialize PDF.js
     pdfjsLib.getDocument('https://cdn.shopify.com/s/files/1/0804/7489/8733/files/Folia_Investor_Deck_3-8-2024.pdf?v=1711866686').promise.then(pdf => {
       const pdfContainer = document.getElementById('pdf-viewer');
@@ -57,10 +47,6 @@
         });
       }
     });
-
-    // Call the function initially and whenever the orientation changes
-    forcePortraitMode();
-    window.addEventListener('resize', forcePortraitMode);
   </script>
 </body>
 </html>
