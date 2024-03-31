@@ -8,27 +8,22 @@
   <style>
     #pdf-viewer {
       position: absolute;
-    
       left: 50%;
       transform: translate(-50%);
-    }
-    @media (max-width: 600px) {
-      #pdf-viewer {
-        width: 100%; /* Set width to 100% to fill the screen */
-        max-width: 100%; /* Ensure it doesn't exceed the screen width */
-      }
     }
   </style>
 </head>
 <body>
-
   <div id="pdf-viewer"></div>
   <script>
     // Initialize PDF.js
     pdfjsLib.getDocument('https://cdn.shopify.com/s/files/1/0804/7489/8733/files/Folia_Investor_Deck_3-8-2024.pdf?v=1711866686').promise.then(pdf => {
+      // Determine the scale based on viewport width
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      const scale = viewportWidth < 600 ? viewportWidth / 600 : 1; // Adjust the divisor (600) as needed
+
       for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
         pdf.getPage(pageNumber).then(page => {
-          const scale = 1.5;
           const viewport = page.getViewport({ scale });
           const canvas = document.createElement('canvas');
           const context = canvas.getContext('2d');
