@@ -20,12 +20,15 @@
 
 
     @media screen and (max-width: 768px) {
-    #pdf-viewer {
-        width: 100vh; /* Set the width to fill the screen */
-        height: 1%;
-        transform: rotate(-90deg);
-    }
-    }
+  #pdf-viewer {
+    width: 100vh; /* Set the width to fill the screen */
+    height: 100vh; /* Set a fixed height to fill the screen */
+    overflow: auto; /* Enable overflow to allow scrolling */
+    transform-origin: top left; /* Set transform origin to top left to rotate properly */
+    transform: rotate(-90deg) translateY(-100%); /* Rotate and position properly */
+  }
+}
+
 
   </style>
 </head>
