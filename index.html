@@ -7,6 +7,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
   <style>
 
+    @media screen and (orientation: portrait) and (max-width: 768px) {
+
+      #pdf-viewer {
+        width: 150%; /* Set the width to fill the screen */
+        transform: rotate(-90deg)
+      }
+    }
 
     #pdf-viewer {
       position: absolute;
