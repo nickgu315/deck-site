@@ -24,13 +24,17 @@
       for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
         pdf.getPage(pageNumber).then(page => {
           const viewport = page.getViewport({ scale: 1 });
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d');
           const scale = pdfContainer.clientWidth / viewport.width;
           const scaledViewport = page.getViewport({ scale });
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
           canvas.height = scaledViewport.height;
           canvas.width = scaledViewport.width;
-          pdfContainer.appendChild(canvas);
+          const canvasDataUrl = canvas.toDataURL('image/jpeg', 1.0); // Convert canvas to data URL
+          const img = document.createElement('img');
+          img.src = canvasDataUrl;
+          img.style.width = '100%'; // Ensure the image fills the container width
+          pdfContainer.appendChild(img);
           page.render({
             canvasContext: context,
             viewport: scaledViewport
