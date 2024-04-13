@@ -36,10 +36,13 @@
   <div id="pdf-viewer"></div>
   <script>
     // Initialize PDF.js
+    
     pdfjsLib.getDocument('https://cdn.shopify.com/s/files/1/0804/7489/8733/files/Folia_Investor_Deck_3-8-2024.pdf?v=1711866686').promise.then(pdf => {
       const pdfContainer = document.getElementById('pdf-viewer');
       
-      for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+      function renderPage(pageNumber) {
+        if (pageNumber > pdf.numPages) return; // Exit if all pages are rendered
+        
         pdf.getPage(pageNumber).then(page => {
           const viewport = page.getViewport({ scale: 1 });
           const scale = pdfContainer.clientWidth / viewport.width;
@@ -53,10 +56,16 @@
             img.src = canvas.toDataURL();
             img.style.width = '100%'; // Ensure the image fills the container width
             pdfContainer.appendChild(img);
+            
+            // Render the next page
+            renderPage(pageNumber + 1);
           });
         });
       }
-    });
+  
+  // Start rendering the first page
+  renderPage(1);
+});
   </script>
 </body>
 </html>
